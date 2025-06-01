@@ -1,5 +1,4 @@
 #!/bin/sh
 
-cd build
-make
-./raylib-cpp-example
+cmake --build build
+./build/raylib-cpp-example
