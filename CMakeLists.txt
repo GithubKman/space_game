@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 project(raylib_cpp_example)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# set(GLFW_BUILD_WAYLAND ON)
 
 # raylib
 find_package(raylib QUIET)
@@ -32,9 +33,9 @@ if (NOT raylib_cpp_FOUND)
 endif()
 
 # This is the main part:
-set(SOURCES main.cpp)
+set(SOURCES main.cpp degree.cpp player.cpp radian.cpp chunk_map.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 11)
+# set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 11)
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib raylib_cpp)
 
 # Web Configurations
