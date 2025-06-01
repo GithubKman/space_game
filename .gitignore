@@ -1,3 +1,4 @@
 build/
 runbuild.sh
 .clangd
+OpenCode.md

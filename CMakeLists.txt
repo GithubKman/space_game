@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.14)
-project(raylib_cpp_example)
+project(space_mining_simulator)
 
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-# set(GLFW_BUILD_WAYLAND ON)
 
 # raylib
 find_package(raylib QUIET)
@@ -32,11 +34,8 @@ if (NOT raylib_cpp_FOUND)
     FetchContent_MakeAvailable(raylib_cpp)
 endif()
 
-# This is the main part:
-set(SOURCES main.cpp degree.cpp player.cpp radian.cpp chunk_map.cpp)
-add_executable(${PROJECT_NAME} ${SOURCES})
-# set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 11)
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib raylib_cpp)
+# Add source directory
+add_subdirectory(src)
 
 # Web Configurations
 if (${PLATFORM} STREQUAL "Web")
@@ -46,5 +45,3 @@ if (${PLATFORM} STREQUAL "Web")
     # Required linker flags for using Raylib with Emscripten
     target_link_options(${PROJECT_NAME} PRIVATE -sEXPORTED_FUNCTIONS=['_main','_malloc'] -sEXPORTED_RUNTIME_METHODS=ccall -sUSE_GLFW=3)
 endif()
-
-# That's it! You should have an example executable that you can run. Have fun!

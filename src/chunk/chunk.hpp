@@ -5,7 +5,7 @@
 
 #include "text_object.hpp"
 #include "vector2i.hpp"
-#include "globals.h"
+#include "globals.hpp"
 namespace sms {
 
 class Chunk {

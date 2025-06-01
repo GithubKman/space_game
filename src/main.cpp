@@ -2,7 +2,7 @@
 #include "raylib-cpp.hpp" // IWYU pragma: export
 #include "rlgl.h"
 
-#include "globals.h"
+#include "globals.hpp"
 #include "chunk-coordinate.hpp"
 #include "chunk_map.hpp"
 #include "player.hpp"

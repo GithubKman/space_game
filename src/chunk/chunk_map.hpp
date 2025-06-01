@@ -5,7 +5,7 @@
 
 #include "raylib-cpp.hpp" // IWYU pragma: export
 
-#include "globals.h"
+#include "globals.hpp"
 #include "vector2i.hpp"
 #include "vector2l.hpp"
 #include "chunk.hpp"

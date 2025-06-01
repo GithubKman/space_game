@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "globals.h"
+#include "globals.hpp"
 #include "vector2i.hpp"
 #include "vector2l.hpp"
 
