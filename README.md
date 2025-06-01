@@ -1,13 +1,22 @@
-# raylib CMake Project
+# Space mining simulator game using Raylib
 
-This provides a base project template which builds with [CMake](https://cmake.org).
+Work in progress game for me to improve coding skills and have fun.
+
+#### TODO:
+  -Add objects like asteroids <br>
+  -Add polygon collisions to asteroids
+
 
 ## Usage
 
-To compile the example, use one of the following dependending on your build target...
+To compile, use one of the following dependending on your build target...
 
 ### Desktop
 
+#### Dependencies:
+All raylib build dependencies <br>
+GLFW (optional)
+#### To compile:
 Use the following to build for desktop:
 
 ``` bash
