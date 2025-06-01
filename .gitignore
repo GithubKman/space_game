@@ -1,2 +1,3 @@
 build/
 runbuild.sh
+.clangd
