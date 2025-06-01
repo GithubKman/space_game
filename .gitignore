@@ -1,4 +1,10 @@
-build/
-runbuild.sh
-.clangd
-OpenCode.md
+/*
+
+!.gitignore
+!README.md
+!CMakeLists.txt
+
+**/.DS_Store
+**.log
+
+!src/
