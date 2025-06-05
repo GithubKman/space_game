@@ -1,0 +1,217 @@
+---
+# Updated .clang-tidy configuration following learncpp.com conventions and modern C++ best practices
+# Based on popular C++ style guides and community standards
+
+Checks: "*,\
+  -google-readability-todo,\
+  -altera-*,\
+  -fuchsia-*,\
+  fuchsia-multiple-inheritance,\
+  -llvm-header-guard,\
+  -llvm-include-order,\
+  -llvmlibc-*,\
+  -modernize-use-nodiscard,\
+  -misc-non-private-member-variables-in-classes,\
+  -readability-magic-numbers,\
+  -cppcoreguidelines-avoid-magic-numbers,\
+  -readability-uppercase-literal-suffix,\
+  -modernize-use-trailing-return-type,\
+  -readability-function-cognitive-complexity,\
+  -bugprone-easily-swappable-parameters"
+
+WarningsAsErrors: ''
+
+CheckOptions:
+  # Argument comments for better code clarity
+  - key: 'bugprone-argument-comment.StrictMode'
+    value: 'true'
+  - key: 'bugprone-argument-comment.CommentBoolLiterals'
+    value: 'true'
+  
+  # Enhanced error detection
+  - key: 'bugprone-misplaced-widening-cast.CheckImplicitCasts'
+    value: 'true'
+  - key: 'bugprone-sizeof-expression.WarnOnSizeOfIntegerExpression'
+    value: 'true'
+  - key: 'bugprone-suspicious-string-compare.WarnOnLogicalNotComparison'
+    value: 'true'
+  
+  # Readability improvements
+  - key: 'readability-simplify-boolean-expr.ChainedConditionalReturn'
+    value: 'true'
+  - key: 'readability-simplify-boolean-expr.ChainedConditionalAssignment'
+    value: 'true'
+  - key: 'readability-uniqueptr-delete-release.PreferResetCall'
+    value: 'true'
+  - key: 'readability-else-after-return.WarnOnUnfixable'
+    value: 'true'
+  - key: 'readability-else-after-return.WarnOnConditionVariables'
+    value: 'true'
+  - key: 'readability-inconsistent-declaration-parameter-name.Strict'
+    value: 'true'
+  - key: 'readability-qualified-auto.AddConstToQualified'
+    value: 'true'
+  - key: 'readability-redundant-access-specifiers.CheckFirstDeclaration'
+    value: 'true'
+  
+  # Core Guidelines compliance
+  - key: 'cppcoreguidelines-init-variables.MathHeader'
+    value: '<cmath>'
+  - key: 'cppcoreguidelines-narrowing-conversions.PedanticMode'
+    value: 'true'
+  - key: 'cppcoreguidelines-pro-bounds-constant-array-index.GslHeader'
+    value: '<gsl/gsl>'
+  - key: 'cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor'
+    value: 'true'
+  
+  # Performance optimizations
+  - key: 'performance-for-range-copy.WarnOnAllAutoCopies'
+    value: 'true'
+  - key: 'performance-inefficient-vector-operation.EnableProto'
+    value: 'false'
+  
+  # Modern C++ features
+  - key: 'modernize-loop-convert.MaxCopySize'
+    value: '16'
+  - key: 'modernize-loop-convert.MinConfidence'
+    value: 'reasonable'
+  - key: 'modernize-pass-by-value.IncludeStyle'
+    value: 'llvm'
+  - key: 'modernize-replace-auto-ptr.IncludeStyle'
+    value: 'llvm'
+  - key: 'modernize-use-auto.MinTypeNameLength'
+    value: '5'
+  - key: 'modernize-use-default-member-init.UseAssignment'
+    value: 'true'
+  - key: 'modernize-use-emplace.ContainersWithPushBack'
+    value: '::std::vector;::std::list;::std::deque'
+  - key: 'modernize-use-emplace.SmartPointers'
+    value: '::std::shared_ptr;::std::unique_ptr;::std::auto_ptr;::std::weak_ptr'
+  
+  # Naming conventions following learncpp.com and popular C++ standards
+  # Variables, functions, and most identifiers use snake_case (lowercase with underscores)
+  - key: 'readability-identifier-naming.AbstractClassCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ClassCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.ClassConstantCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ClassMemberCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ClassMethodCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ConstantCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ConstantMemberCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ConstantParameterCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ConstantPointerParameterCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ConstexprFunctionCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ConstexprMethodCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ConstexprVariableCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.EnumCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.EnumConstantCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.FunctionCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.GlobalConstantCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.GlobalConstantPointerCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.GlobalFunctionCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.GlobalPointerCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.GlobalVariableCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.InlineNamespaceCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.LocalConstantCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.LocalConstantPointerCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.LocalPointerCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.LocalVariableCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.MacroDefinitionCase'
+    value: 'UPPER_CASE'
+  - key: 'readability-identifier-naming.MemberCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.MethodCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.NamespaceCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ParameterCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ParameterPackCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.PointerParameterCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.PrivateMemberCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.PrivateMemberPrefix'
+    value: 'm_'
+  - key: 'readability-identifier-naming.PrivateMethodCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ProtectedMemberCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ProtectedMemberPrefix'
+    value: 'm_'
+  - key: 'readability-identifier-naming.ProtectedMethodCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.PublicMemberCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.PublicMethodCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.ScopedEnumConstantCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.StaticConstantCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.StaticVariableCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.StructCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.TemplateParameterCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.TemplateTemplateParameterCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.TypeAliasCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.TypedefCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.TypeTemplateParameterCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.UnionCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.ValueTemplateParameterCase'
+    value: 'CamelCase'
+  - key: 'readability-identifier-naming.VariableCase'
+    value: 'lower_case'
+  - key: 'readability-identifier-naming.VirtualMethodCase'
+    value: 'lower_case'
+  
+  # Additional naming rules for better consistency
+  - key: 'readability-identifier-naming.GetConfigPerFile'
+    value: 'true'
+  - key: 'readability-identifier-naming.IgnoreFailedSplit'
+    value: 'false'
+  
+  # Miscellaneous options for better code quality
+  - key: 'misc-const-correctness.WarnPointersAsValues'
+    value: 'false'
+  - key: 'misc-const-correctness.TransformPointersAsValues'
+    value: 'false'
+  - key: 'misc-throw-by-value-catch-by-reference.CheckThrowTemporaries'
+    value: 'true'
+  
+  # Portability
+  - key: 'portability-simd-intrinsics.Suggest'
+    value: 'false'
+...
