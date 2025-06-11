@@ -1,6 +1,6 @@
 # space_game
 
-This is the space_game project.
+Work in Progess game about flying in an asteroid field
 
 # Building and installing
 
