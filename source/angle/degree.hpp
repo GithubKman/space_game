@@ -26,6 +26,18 @@ public:
     // Getter and Setter for Radians
     double getRadians() const;
     void setRadians(double rad);
+
+    Degree multiplyDegrees(const Degree& degree);
+
+    Degree operator*(const Degree& degree) {
+	return multiplyDegrees(degree);
+    }
+
+    void addDegrees(const Degree& degree);
+
+    void operator+=(const Degree& degree) {
+	addDegrees(degree);
+    }
 };
 
 } // namespace sms

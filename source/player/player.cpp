@@ -15,18 +15,18 @@ void Player::setDirection(Degree direction) {
 }
 void Player::increaseSpeed() {
     if (m_speed <= m_maxSpeed)
-        m_speed += m_acceleration;
+        m_speed += m_acceleration * GetFrameTime();
     else m_speed = m_maxSpeed;
 }
 void Player::decreaseSpeed() {
     if (m_speed >= -(m_maxSpeed))
-        m_speed -= m_acceleration;
+        m_speed -= m_acceleration * GetFrameTime();
     else m_speed = -(m_maxSpeed);
 
 }
 raylib::Vector2 Player::getVector() {
-    return Vector2{static_cast<float>(m_speed * cos(m_direction.getRadians())),
-    	       static_cast<float>(m_speed * sin(m_direction.getRadians()))};
+    return Vector2{static_cast<float>(m_speed * GetFrameTime() * cos(m_direction.getRadians())),
+    	       static_cast<float>(m_speed * GetFrameTime() * sin(m_direction.getRadians()))};
 }
 void Player::rotate(Degree degree) {
     setDirection(m_direction.getDegrees().getDegrees() + degree.getDegrees());
@@ -35,4 +35,4 @@ void Player::draw() {
     m_rectangle.Draw(m_rectangle.GetSize() * 1/2.0, m_direction.getDegrees().getDegrees(), RED);
 }
 
-} // namespace sms
+}

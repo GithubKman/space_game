@@ -45,14 +45,15 @@ public:
         normalize();  // Ensure consistency
     }
 
-    void addLocal(Vector2l pos) {
+    template <typename T>
+    void addLocal(const T& pos) {
 	m_local += pos;
 	normalize();
     }
 
-    void addLocal(raylib::Vector2 pos) {
-	m_local += pos;
-	normalize();
+    template <typename T>
+    void operator+=(const T& pos) {
+	addLocal(pos);
     }
 
     // Setters

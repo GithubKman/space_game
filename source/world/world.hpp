@@ -1,13 +1,28 @@
 #ifndef WORLD_HPP
 #define WORLD_HPP
 
-#include <unordered_map>
 #include <vector>
 
 #include "chunk/chunk.hpp"
+#include "chunk/chunk_coordinate.hpp"
+#include "chunk/chunk_map.hpp"
+#include "object/entity.hpp"
+
+namespace sms {
 
 class World {
 private:
-    std::vector<sms::Asteroid>
+    ChunkCoordinate m_worldLoc;
+    ChunkMap m_chunkMap;
+    std::vector<Entity> m_entities;
+public:
+    World() : m_worldLoc {{0,0}, {0,0}},
+	      m_chunkMap(),
+	      m_entities() {
+    }
+    void update(raylib::Vector2);
+
 };
 #endif
+
+}

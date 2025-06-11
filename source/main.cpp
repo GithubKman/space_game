@@ -1,4 +1,8 @@
 
+#include <format>
+#include <iostream>
+#include <string>
+
 #include "raylib-cpp.hpp" // IWYU pragma: export
 #include "raylib.h"
 #include "rlgl.h"
@@ -31,6 +35,8 @@ void UpdateDrawFrame(sms::Player& player,
 	chunkMap.draw(worldLoc);
 	player.draw();
     camera.EndMode();
+    raylib::Text debug {std::format("Current FPS {}", GetFPS()), 15};
+    debug.Draw(10, 10);
     window.EndDrawing();
     //----------------------------------------------------------------------------------
 }
@@ -41,13 +47,15 @@ int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    raylib::Window window {screenWidth, screenHeight, "raylib [core] example - basic window", FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_ALWAYS_RUN | FLAG_MSAA_4X_HINT};
-    sms::Player player {0, 200000 / framesPerSecond, 5 / framesPerSecond, 0.0};
+    raylib::Window window {screenWidth, screenHeight, "raylib [core] example - basic window", FLAG_WINDOW_RESIZABLE | 
+											      FLAG_WINDOW_HIGHDPI |
+											      FLAG_WINDOW_ALWAYS_RUN | 
+											      FLAG_MSAA_4X_HINT};
+    sms::Player player {0, 2000, 100, 0.0};
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
-    window.SetTargetFPS(framesPerSecond);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     raylib::Camera2D camera {{0, 0}, {0, 0}, 0.0f, 1.0f};
@@ -65,6 +73,7 @@ int main()
     int fbWidth, fbHeight;
     glfwGetFramebufferSize(glfwWindow, &fbWidth, &fbHeight);
     std::cout << fbWidth << " " << fbHeight << "\n";
+    bool slowFPS {false};
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -95,12 +104,22 @@ int main()
 	if (raylib::Keyboard::IsKeyDown(KEY_S))
 	    player.decreaseSpeed();
 	if (raylib::Keyboard::IsKeyDown(KEY_A))
-	    player.rotate(-1.0);
+	    player.rotate(-50.0 * GetFrameTime());
 	if (raylib::Keyboard::IsKeyDown(KEY_D))
-	    player.rotate(1.0);
+	    player.rotate(50.0 * GetFrameTime());
 	if (raylib::Keyboard::IsKeyPressed(KEY_T)) {
-	sms::Vector2i loc {worldLoc.getChunk()};
-	worldLoc.setChunk(loc + loc);
+	    sms::Vector2i loc {worldLoc.getChunk()};
+	    worldLoc.setChunk(loc + loc);
+	}
+	if (raylib::Keyboard::IsKeyPressed(KEY_F)) {
+	    slowFPS = !slowFPS;
+	    std::cout << slowFPS << "\n";
+	    if (slowFPS) {
+		window.SetTargetFPS(-1);
+		std::cout << "Uncapped\n";
+	    }
+	    else
+		window.SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
 	}
 	worldLoc.addLocal(player.getVector());
 	//worldLoc.print();

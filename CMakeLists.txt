@@ -25,6 +25,7 @@ add_library(
     source/chunk/chunk_map.cpp
     source/player/player.cpp
     source/world/world.cpp
+    source/object/entity.cpp
 )
 
 
