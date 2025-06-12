@@ -57,6 +57,9 @@ public:
     Vector2l operator + (const Vector2l& vector) const {
 	return {m_x + vector.m_x, m_y + vector.m_y};
     }
+    Vector2l operator-(const Vector2l& vector) const {
+	return {m_x - vector.m_x, m_y - vector.m_y};
+    }
     Vector2l operator*(double scalar) {
 	return Scaled(scalar);
     }

@@ -9,8 +9,8 @@
 
 #include "globals.hpp"
 #include "chunk/chunk_coordinate.hpp"
-#include "chunk/chunk_map.hpp"
 #include "player/player.hpp"
+#include "world/world.hpp"
 #include <GLFW/glfw3.h>
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -20,7 +20,7 @@ void UpdateDrawFrame(sms::Player& player,
 		     sms::ChunkCoordinate& worldLoc,
 		     raylib::Camera2D& camera,
 		     raylib::Window& window,
-		     sms::ChunkMap& chunkMap) {
+		     sms::World& world) {
 
 
 
@@ -31,8 +31,7 @@ void UpdateDrawFrame(sms::Player& player,
     window.BeginDrawing();
     ClearBackground(GRAY);
     camera.BeginMode();
-
-	chunkMap.draw(worldLoc);
+	world.draw(worldLoc);
 	player.draw();
     camera.EndMode();
     raylib::Text debug {std::format("Current FPS {}", GetFPS()), 15};
@@ -63,7 +62,7 @@ int main()
     float zoomSpeed {0.1f};
     float zoom {1};
 
-    sms::ChunkMap chunkMap {};
+    sms::World world {};
     std::cout << "["
 	      << window.GetScaleDPI().GetX()
 	      << ", "
@@ -130,7 +129,8 @@ int main()
 	camera.SetRotation((-static_cast<float>(player.getDirection().getDegrees() - 90.0f)));
 
 	
-	UpdateDrawFrame(player, worldLoc, camera, window, chunkMap);
+	world.update();
+	UpdateDrawFrame(player, worldLoc, camera, window, world);
     }
 #endif
 

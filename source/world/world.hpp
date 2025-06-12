@@ -3,7 +3,6 @@
 
 #include <vector>
 
-#include "chunk/chunk.hpp"
 #include "chunk/chunk_coordinate.hpp"
 #include "chunk/chunk_map.hpp"
 #include "object/entity.hpp"
@@ -20,9 +19,10 @@ public:
 	      m_chunkMap(),
 	      m_entities() {
     }
-    void update(raylib::Vector2);
+    void update();
 
+    void draw(ChunkCoordinate worldLoc);
 };
-#endif
 
-}
+} // namespace sms
+#endif

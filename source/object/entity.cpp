@@ -64,5 +64,8 @@ void Entity::update() {
     m_coordinate += m_movement * GetFrameTime();
     m_rotation += m_rotationPerSecond * Degree {GetFrameTime()};
 }
+void Entity::draw(Vector2l offset) const {
+    m_texture.Draw(offset - m_coordinate.getLocal());
+}
 
 } // namespace sms

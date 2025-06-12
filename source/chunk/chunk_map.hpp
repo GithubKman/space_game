@@ -33,8 +33,8 @@ public:
 
     void genChunk(const Vector2i& coordinate);
     void drawChunks(const std::unordered_map<Vector2i, std::reference_wrapper<Chunk>>& map, const Vector2l& offset);
-    std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> getChunks(const Vector2i& coordinate);
-    void draw(const ChunkCoordinate& chunkCoord);
+std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> getChunks(const Vector2i& coordinate, std::vector<Entity>& entities);
+    void draw(const ChunkCoordinate& chunkCoord, std::vector<Entity>& entities);
     void setRenderDistance(int renderDistance);
 };
 

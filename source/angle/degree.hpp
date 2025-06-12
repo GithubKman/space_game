@@ -2,6 +2,7 @@
 #define DEGREE_HPP
 
 #include <cmath>
+#include "Vector2.hpp"
 
 namespace sms {
 
@@ -32,6 +33,8 @@ public:
     Degree operator*(const Degree& degree) {
 	return multiplyDegrees(degree);
     }
+
+    raylib::Vector2 getVector2(float magnitude);
 
     void addDegrees(const Degree& degree);
 

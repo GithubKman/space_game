@@ -5,7 +5,7 @@
 #include <vector>
 #include "angle/degree.hpp"
 #include "chunk/chunk_coordinate.hpp"
-#include "raylib-cpp.hpp"
+#include "raylib-cpp.hpp" // IWYU pragma: export
 #include "Vector2.hpp"
 namespace sms {
 
@@ -42,6 +42,7 @@ public:
     
     //Systems
     void update();
+    void draw(Vector2l offset) const;
 
     ChunkCoordinate getCoordinate() {
 	return m_coordinate;

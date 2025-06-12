@@ -4,7 +4,10 @@
 #include <functional>
 
 #include "chunk_map.hpp"
+#include "angle/degree.hpp"
 #include "chunk_coordinate.hpp"
+#include "object/entity.hpp"
+#include "raylib.h"
 #include "vector/vector2l.hpp"
 namespace sms {
 
@@ -25,7 +28,7 @@ void ChunkMap::drawChunks(const std::unordered_map<Vector2i, std::reference_wrap
 
 }
 
-std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> ChunkMap::getChunks(const Vector2i& coordinate) {
+std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> ChunkMap::getChunks(const Vector2i& coordinate, std::vector<Entity>& entities) {
     std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> localChunks;
 
     for (int x {-m_renderDistance}; x <= m_renderDistance; ++x) {
@@ -33,6 +36,23 @@ std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> ChunkMap::getChunks(
 	    Vector2i localPos {coordinate - Vector2i{x, y}};
 	    if (!m_chunkMap.count(localPos)) {
 		m_chunkMap.insert({localPos, localPos});
+		if (GetRandomValue(1, 10) == 10) {
+		    entities.push_back(
+			Entity {
+			    Degree {static_cast<double>(GetRandomValue(0, 359))}.getVector2(
+			    static_cast<float>(GetRandomValue(1, 100))),
+			ChunkCoordinate{
+			    {static_cast<double>(GetRandomValue(0, 511)),
+			     static_cast<double>(GetRandomValue(0, 511))},
+				localPos
+			    },
+			    static_cast<double>(GetRandomValue(0, 359)),
+			    static_cast<double>(GetRandomValue(0, 512 * 2)),
+			    {"resources/asteroid.png"}
+
+			
+			});
+		}
 	    }
 	    localChunks.insert({Vector2i{x, y}, m_chunkMap.at(localPos).getReference()});
 	}
@@ -40,8 +60,8 @@ std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> ChunkMap::getChunks(
     return localChunks;
 }
 
-void ChunkMap::draw(const ChunkCoordinate& chunkCoord) {
-    drawChunks(getChunks(chunkCoord.getChunk()), chunkCoord.getLocal());
+void ChunkMap::draw(const ChunkCoordinate& chunkCoord, std::vector<Entity>& entities) {
+    drawChunks(getChunks(chunkCoord.getChunk(), entities), chunkCoord.getLocal());
 }
 
 void ChunkMap::setRenderDistance(int renderDistance) {
