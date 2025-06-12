@@ -129,7 +129,7 @@ int main()
 	camera.SetRotation((-static_cast<float>(player.getDirection().getDegrees() - 90.0f)));
 
 	
-	world.update();
+	world.update(worldLoc);
 	UpdateDrawFrame(player, worldLoc, camera, window, world);
     }
 #endif

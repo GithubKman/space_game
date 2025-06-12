@@ -5,13 +5,13 @@
 
 namespace sms {
 
-void World::update() {
-    for (auto& pair : m_chunkMap.getChunks(m_worldLoc.getChunk(), m_entities)) {
+void World::update(ChunkCoordinate worldLoc) {
+    for (auto& pair : m_chunkMap.getChunks(worldLoc.getChunk(), m_entities)) {
 	pair.second.get().clearEntities();
     }
     for (Entity& entity : m_entities) {
 	entity.update();
-	for (auto& pair : m_chunkMap.getChunks(m_worldLoc.getChunk(), m_entities)) {
+	for (auto& pair : m_chunkMap.getChunks(worldLoc.getChunk(), m_entities)) {
 	    if (entity.getCoordinate().getChunk() == pair.second.get().getCoordinate()) {
 		pair.second.get().addEntity(entity);
 	    }

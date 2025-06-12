@@ -1,6 +1,8 @@
 #include "entity.hpp"
 
 #include <raylib.h>
+#include "Rectangle.hpp"
+#include "angle/degree.hpp"
 #include <vector>
 #include <cstddef>  // for std::byte
 
@@ -62,10 +64,16 @@ Image CreateDebugImageFromMask(const std::vector<std::vector<std::byte>>& mask, 
 
 void Entity::update() {
     m_coordinate += m_movement * GetFrameTime();
-    m_rotation += m_rotationPerSecond * Degree {GetFrameTime()};
+    m_rotation += m_rotationPerSecond * GetFrameTime();
 }
 void Entity::draw(Vector2l offset) const {
-    m_texture.Draw(offset - m_coordinate.getLocal());
+    m_texture.Draw(
+	raylib::Rectangle {{0, 0}, m_texture.GetSize()},
+	raylib::Rectangle {offset - m_coordinate.getLocal(), m_texture.GetSize()},
+	{raylib::Vector2{m_texture.GetSize()} * 1/2},
+	m_rotation.getDegrees(),
+	WHITE
+    );
 }
 
 } // namespace sms

@@ -23,6 +23,6 @@ Degree Degree::multiplyDegrees(const Degree& degree) {
 }
 
 void Degree::addDegrees(const Degree& degree) {
-    degrees *= degree.getDegrees();
+    degrees += degree.getDegrees();
 }
 } // namespace sms

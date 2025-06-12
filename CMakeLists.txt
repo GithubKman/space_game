@@ -94,4 +94,9 @@ elseif(NOT PROJECT_IS_TOP_LEVEL)
   )
 endif()
 
+add_custom_command(TARGET MyApp POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:MyApp>/resources
+)
+
 include(cmake/dev-mode.cmake)

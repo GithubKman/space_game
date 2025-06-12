@@ -1,7 +1,10 @@
 #include <iostream>
 #include <stdexcept>
+#include <string>
 #include <unordered_map>
 #include <functional>
+#include <random>
+#include <algorithm>
 
 #include "chunk_map.hpp"
 #include "angle/degree.hpp"
@@ -10,6 +13,15 @@
 #include "raylib.h"
 #include "vector/vector2l.hpp"
 namespace sms {
+
+double getClampedNormal(double mean, double stddev, double min, double max) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::normal_distribution<double> dist(mean, stddev);
+
+    double value = dist(gen);
+    return std::clamp(value, min, max);
+}
 
 void drawChunk(const std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> chunkMap, const Vector2i& coordinate, const Vector2l& offset) {
     try {
@@ -46,9 +58,9 @@ std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> ChunkMap::getChunks(
 			     static_cast<double>(GetRandomValue(0, 511))},
 				localPos
 			    },
-			    static_cast<double>(GetRandomValue(0, 359)),
-			    static_cast<double>(GetRandomValue(0, 512 * 2)),
-			    {"resources/asteroid.png"}
+			static_cast<double>(GetRandomValue(0, 359)),
+			getClampedNormal(0, 20, -359, 359),
+			raylib::Image {"resources/asteroid.png"}
 
 			
 			});

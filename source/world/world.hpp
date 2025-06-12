@@ -11,15 +11,13 @@ namespace sms {
 
 class World {
 private:
-    ChunkCoordinate m_worldLoc;
     ChunkMap m_chunkMap;
     std::vector<Entity> m_entities;
 public:
-    World() : m_worldLoc {{0,0}, {0,0}},
-	      m_chunkMap(),
+    World() : m_chunkMap(),
 	      m_entities() {
     }
-    void update();
+    void update(ChunkCoordinate worldLoc);
 
     void draw(ChunkCoordinate worldLoc);
 };
