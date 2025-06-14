@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdexcept>
-#include <string>
 #include <unordered_map>
 #include <functional>
 #include <random>
@@ -10,6 +9,7 @@
 #include "angle/degree.hpp"
 #include "chunk_coordinate.hpp"
 #include "object/entity.hpp"
+#include "object/texturecache.hpp"
 #include "raylib.h"
 #include "vector/vector2l.hpp"
 namespace sms {
@@ -23,9 +23,16 @@ double getClampedNormal(double mean, double stddev, double min, double max) {
     return std::clamp(value, min, max);
 }
 
-void drawChunk(const std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> chunkMap, const Vector2i& coordinate, const Vector2l& offset) {
+void drawChunk(const std::unordered_map<Vector2i,
+	       std::reference_wrapper<Chunk>> chunkMap,
+	       const Vector2i& coordinate,
+	       const Vector2l& offset)
+{
     try {
-	chunkMap.at(coordinate).get().draw((Vector2l{coordinate} * static_cast<double>(g_chunkSize))+ offset);
+	chunkMap
+	    .at(coordinate)
+	    .get()
+	    .draw((Vector2l{coordinate} * static_cast<double>(g_chunkSize))+ offset);
     }
     catch (const std::out_of_range& e){
 	std::cerr << "Chunk does not exist - " << e.what() << std::endl;
@@ -33,14 +40,23 @@ void drawChunk(const std::unordered_map<Vector2i, std::reference_wrapper<Chunk>>
 
 }
 
-void ChunkMap::drawChunks(const std::unordered_map<Vector2i, std::reference_wrapper<Chunk>>& map, const Vector2l& offset) {
+void ChunkMap::drawChunks(const std::unordered_map<Vector2i,
+			  std::reference_wrapper<Chunk>>& map,
+			  const Vector2l& offset)
+{
     for (const auto& pair : map) {
 	drawChunk(map, pair.first, offset);
     }
 
 }
 
-std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> ChunkMap::getChunks(const Vector2i& coordinate, std::vector<Entity>& entities) {
+std::unordered_map<Vector2i,
+		   std::reference_wrapper<Chunk>>
+ChunkMap::getChunks(
+    const Vector2i& coordinate,
+    std::vector<Entity>& entities,
+    TextureCache& textureCache)
+{
     std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> localChunks;
 
     for (int x {-m_renderDistance}; x <= m_renderDistance; ++x) {
@@ -60,7 +76,7 @@ std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> ChunkMap::getChunks(
 			    },
 			static_cast<double>(GetRandomValue(0, 359)),
 			getClampedNormal(0, 20, -359, 359),
-			raylib::Image {"resources/asteroid.png"}
+			textureCache.load("resources/asteroid.png")
 
 			
 			});
@@ -72,11 +88,18 @@ std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> ChunkMap::getChunks(
     return localChunks;
 }
 
-void ChunkMap::draw(const ChunkCoordinate& chunkCoord, std::vector<Entity>& entities) {
-    drawChunks(getChunks(chunkCoord.getChunk(), entities), chunkCoord.getLocal());
+void ChunkMap::draw(const ChunkCoordinate& chunkCoord,
+		    std::vector<Entity>& entities,
+		    TextureCache& textureCache)
+{
+    drawChunks(getChunks(chunkCoord.getChunk(),
+			 entities,
+			 textureCache),
+	       chunkCoord.getLocal());
 }
 
-void ChunkMap::setRenderDistance(int renderDistance) {
+void ChunkMap::setRenderDistance(int renderDistance)
+{
     m_renderDistance = renderDistance;
 }
 } // namespace sms

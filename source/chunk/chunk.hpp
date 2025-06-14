@@ -38,7 +38,7 @@ public:
 	m_entities.push_back(entity);
     }
 
-    void draw(raylib::Vector2 offset) const {
+    void draw(raylib::Vector2 offset) {
 	if (!m_textObjects.empty()) {
 	    for (TextObject element : m_textObjects) {
 		element.draw(offset);

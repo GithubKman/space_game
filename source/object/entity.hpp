@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <vector>
+#include "Texture.hpp"
 #include "angle/degree.hpp"
 #include "chunk/chunk_coordinate.hpp"
 #include "raylib-cpp.hpp" // IWYU pragma: export
@@ -16,9 +17,7 @@ private:
     ChunkCoordinate m_coordinate;
     Degree m_rotation;
     double m_rotationPerSecond;
-    raylib::Image m_image;
-    raylib::Texture2D m_texture;
-    raylib::Rectangle m_imageRectangle;
+    raylib::Texture2D& m_texture;
 
     std::vector<std::vector<std::byte>> ConvertImageToAlphaMask(const Image& image);
 
@@ -28,14 +27,12 @@ public:
 	   ChunkCoordinate coordinate,
 	   Degree rotation,
 	   double rotationPerSecond,
-	   raylib::Image image) :
+	   raylib::Texture2D& texture) :
     m_movement {movement},
     m_coordinate {coordinate},
     m_rotation {rotation},
     m_rotationPerSecond {rotationPerSecond},
-    m_image {image},
-    m_texture {image.LoadTexture()},
-    m_imageRectangle {image.GetAlphaBorder(0.5f)}
+    m_texture {texture}
     {}
     
     //Systems

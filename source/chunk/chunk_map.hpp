@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 
+#include "object/texturecache.hpp"
 #include "raylib-cpp.hpp" // IWYU pragma: export
 
 #include "globals.hpp"
@@ -16,7 +17,7 @@ namespace sms {
 class ChunkMap {
 private:
     std::unordered_map<Vector2i, Chunk> m_chunkMap;
-    static constexpr int m_defaultRenderDistance {2};
+    static constexpr int m_defaultRenderDistance {8};
     int m_renderDistance;
 
     void fixInvariant() {
@@ -32,9 +33,15 @@ public:
     ChunkMap(int renderDistance) : m_renderDistance {renderDistance}, m_chunkMap {} {}
 
     void genChunk(const Vector2i& coordinate);
-    void drawChunks(const std::unordered_map<Vector2i, std::reference_wrapper<Chunk>>& map, const Vector2l& offset);
-std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> getChunks(const Vector2i& coordinate, std::vector<Entity>& entities);
-    void draw(const ChunkCoordinate& chunkCoord, std::vector<Entity>& entities);
+    void drawChunks(const std::unordered_map<Vector2i, std::reference_wrapper<Chunk>>& map,
+		    const Vector2l& offset);
+    std::unordered_map<Vector2i, std::reference_wrapper<Chunk>> 
+    getChunks(const Vector2i& coordinate,
+	      std::vector<Entity>& entities,
+	      TextureCache& textureCache);
+    void draw(const ChunkCoordinate& chunkCoord,
+	      std::vector<Entity>& entities,
+	      TextureCache& textureCache);
     void setRenderDistance(int renderDistance);
 };
 

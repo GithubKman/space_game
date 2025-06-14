@@ -45,6 +45,20 @@ if (NOT raylib_FOUND)
 endif()
 
 # raylib-cpp
+find_package(EnTT QUIET)
+if (NOT EnTT_FOUND)
+    if (NOT DEFINED EnTT_VERSION)
+	set(EnTT_VERSION v3.15.0)
+    endif()
+    include(FetchContent)
+    FetchContent_Declare(
+	EnTT
+        GIT_REPOSITORY https://github.com/skypjack/entt.git
+	GIT_TAG ${EnTT_VERSION}
+    )
+    FetchContent_MakeAvailable(EnTT)
+endif()
+
 find_package(raylib_cpp QUIET)
 if (NOT raylib_cpp_FOUND)
     if (NOT DEFINED RAYLIB_CPP_VERSION)
@@ -58,14 +72,13 @@ if (NOT raylib_cpp_FOUND)
     )
     FetchContent_MakeAvailable(raylib_cpp)
 endif()
-
 target_include_directories(
     space_game_lib ${warning_guard}
     PUBLIC
     "\$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>"
 )
 
-target_link_libraries(space_game_lib PUBLIC raylib raylib_cpp)
+target_link_libraries(space_game_lib PUBLIC raylib raylib_cpp EnTT)
 # ---- Declare executable ----
 
 add_executable(space_game_exe source/main.cpp)

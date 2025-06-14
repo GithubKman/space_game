@@ -1,5 +1,4 @@
 
-#include <format>
 #include <iostream>
 #include <string>
 
@@ -15,7 +14,26 @@
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
 #endif
+// Initialize tracking variables
+float frameTime = 0.0f;
+int frameCount = 0;
+float fps = 0.0f;
 
+void DrawDebugOverlay(int entityCount, int textureCount) {
+    // Update metrics
+    frameTime = GetFrameTime();
+    frameCount++;
+    fps = GetFPS();
+
+    // Draw background box
+    DrawRectangle(10, 10, 220, 100, Fade(DARKGRAY, 0.6f));
+
+    // Print stats
+    DrawText(TextFormat("FPS: %.1f", fps), 20, 20, 20, GREEN);
+    DrawText(TextFormat("Frame Time: %.2f ms", frameTime * 1000), 20, 40, 20, LIGHTGRAY);
+    DrawText(TextFormat("Entities: %d", entityCount), 20, 60, 20, ORANGE);
+    DrawText(TextFormat("Textures: %d", textureCount), 20, 80, 20, SKYBLUE);
+}
 void UpdateDrawFrame(sms::Player& player,
 		     sms::ChunkCoordinate& worldLoc,
 		     raylib::Camera2D& camera,
@@ -34,8 +52,7 @@ void UpdateDrawFrame(sms::Player& player,
 	world.draw(worldLoc);
 	player.draw();
     camera.EndMode();
-    raylib::Text debug {std::format("Current FPS {}", GetFPS()), 15};
-    debug.Draw(10, 10);
+    DrawDebugOverlay(world.getEntityCount(), world.getTextureCount());
     window.EndDrawing();
     //----------------------------------------------------------------------------------
 }

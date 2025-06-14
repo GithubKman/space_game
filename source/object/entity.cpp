@@ -66,12 +66,12 @@ void Entity::update() {
     m_coordinate += m_movement * GetFrameTime();
     m_rotation += m_rotationPerSecond * GetFrameTime();
 }
-void Entity::draw(Vector2l offset) const {
+void Entity::draw(Vector2l offset) const{
     m_texture.Draw(
 	raylib::Rectangle {{0, 0}, m_texture.GetSize()},
 	raylib::Rectangle {offset - m_coordinate.getLocal(), m_texture.GetSize()},
 	{raylib::Vector2{m_texture.GetSize()} * 1/2},
-	m_rotation.getDegrees(),
+	static_cast<float>(m_rotation.getDegrees()),
 	WHITE
     );
 }
